@@ -12,10 +12,7 @@ io.on("connection", (socket) => {
   });
 });
 
-// Specify your deployed address here without the protocol
-const deployedAddress = "lavidasocket.onrender.com";
+// Use the process.env.PORT provided by Render for dynamic port assignment
 const PORT = process.env.PORT || 8080;
 
-http.listen(PORT, deployedAddress, () =>
-  console.log(`listening on ${deployedAddress}:${PORT}`)
-);
+http.listen(PORT, () => console.log(`listening on port ${PORT}`));
