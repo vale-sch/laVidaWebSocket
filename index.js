@@ -1,5 +1,4 @@
 const http = require("http").createServer();
-http.address = "https://lavidasocket.onrender.com";
 const io = require("socket.io")(http, {
   cors: { origin: "*" },
 });
@@ -13,6 +12,9 @@ io.on("connection", (socket) => {
   });
 });
 
-http.listen(8080, () =>
-  console.log("listening on https://lavidasocket.onrender.com:8080")
+// Specify your deployed address here
+const deployedAddress = "https://lavidasocket.onrender.com";
+
+http.listen(8080, deployedAddress, () =>
+  console.log(`listening on ${deployedAddress}:8080`)
 );
