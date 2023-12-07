@@ -12,9 +12,9 @@ io.on("connection", (socket) => {
   });
 });
 
-// Specify your deployed address here
-const deployedAddress = "https://lavidasocket.onrender.com";
+// Specify your deployed address here without the protocol
+const deployedAddress = "lavidasocket.onrender.com";
 
-http.listen(8080, deployedAddress, () =>
-  console.log(`listening on ${deployedAddress}:8080`)
+http.listen(10000, deployedAddress, () =>
+  console.log(`listening on ${deployedAddress}:10000`)
 );
