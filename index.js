@@ -1,9 +1,6 @@
 const http = require("http").createServer();
 const io = require("socket.io")(http, {
-  cors: {
-    origin: ["http://127.0.0.1:5500", "https://lavidasocket.onrender.com"],
-    methods: ["GET", "POST"],
-  },
+  cors: { origin: "*" },
 });
 
 io.on("connection", (socket) => {
