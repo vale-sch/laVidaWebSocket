@@ -1,5 +1,5 @@
 const http = require("http").createServer();
-
+http.address = "https://lavidasocket.onrender.com";
 const io = require("socket.io")(http, {
   cors: { origin: "*" },
 });
@@ -13,4 +13,6 @@ io.on("connection", (socket) => {
   });
 });
 
-http.listen(8080, () => console.log("listening on http://localhost:8080"));
+http.listen(8080, () =>
+  console.log("listening on https://lavidasocket.onrender.com:8080")
+);
