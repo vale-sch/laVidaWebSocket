@@ -14,7 +14,8 @@ io.on("connection", (socket) => {
 
 // Specify your deployed address here without the protocol
 const deployedAddress = "lavidasocket.onrender.com";
+const PORT = process.env.PORT || 8080;
 
-http.listen(10000, deployedAddress, () =>
-  console.log(`listening on ${deployedAddress}:10000`)
+http.listen(PORT, deployedAddress, () =>
+  console.log(`listening on ${deployedAddress}:${PORT}`)
 );
