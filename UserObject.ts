@@ -1,16 +1,12 @@
-export class InfoStream {
+import { createClient } from "@supabase/supabase-js";
+import { ChatHistory } from "./ChatHistory";
+
+export class UserObject {
 
     public url: string = "";
     public myUsername: string = "";
     public chatID: string = "";
     public partnerUsername: string = "";
     public acceptedChatInvite: boolean = false;
-
-    // constructor(_href: string = "", _chatName: string) {
-
-    //     this.href = _href;
-    //     this.chatName = _chatName;
-    // }
-
 }
 
