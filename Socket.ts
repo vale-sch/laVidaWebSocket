@@ -28,11 +28,9 @@ io.on("connection", (socket) => {
   });
 
 
-  socket.on("infoStream", (infoStream: string) => {
-    infoStreamObj = JSON.parse(infoStream) as UserObject;
-    io.emit("infoStream", infoStream);
+  socket.on("startChat", (chatID: string) => {
     let newChatStream: ChatStream = new ChatStream();
-    newChatStream.startStreamingChat(infoStreamObj.chatID, io)
+    newChatStream.startStreamingChat(chatID, io)
   });
 
   socket.on("disconnect", (error: string) => {
