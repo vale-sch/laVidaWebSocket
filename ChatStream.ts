@@ -21,7 +21,7 @@ export class ChatStream {
                 (payload) => {
                     const newRecord = payload.new;
                     let chatHistory: ChatHistory = [newRecord] as unknown as ChatHistory;
-                    io.emit(`chat=${chatID}`, JSON.stringify(chatHistory, [JSON.stringify(chatHistory.messages)]));
+                    io.emit(`chat=${chatID}`, JSON.stringify(chatHistory));
 
                 }
             )

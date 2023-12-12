@@ -1,8 +1,5 @@
-import { createClient } from "@supabase/supabase-js";
 import { createServer } from "http";
-import { Server, Socket } from "socket.io";
-import { UserObject } from "./UserObject";
-import { ChatHistory } from "./ChatHistory";
+import { Server } from "socket.io";
 import { User } from "./User";
 import { ChatStream } from "./ChatStream";
 
@@ -10,7 +7,6 @@ const httpServer = createServer();
 const io = new Server(httpServer, {
   cors: { origin: "*" },
 });
-let infoStreamObj: UserObject = new UserObject();
 let users: User[] = Array<User>();
 
 User.fetchUsers();
@@ -21,6 +17,7 @@ io.on("connection", (socket) => {
     let userID: number = JSON.parse(userIDSocket) as number;
     User.usersDB.forEach(user => {
       if (userID == user.id) {
+        user.socketID = socket.id;
         user.isActive = true;
         User.update_user_active(user.name, user.isActive);
       }
@@ -34,13 +31,13 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", (error: string) => {
-    // users.forEach(userInUsers => {
-    //   if (userInUsers.ioClientID == socket.id) {
-    //     console.log("USER CONNECTION CLOSED");
-    //     userInUsers.isActive = false;
-    //     User.update_user_active(userInUsers.name, userInUsers.isActive);
-    //   }
-    // });
+    users.forEach(userInUsers => {
+      if (userInUsers.socketID == socket.id) {
+        console.log("USER CONNECTION CLOSED");
+        userInUsers.isActive = false;
+        User.update_user_active(userInUsers.name, userInUsers.isActive);
+      }
+    });
   });
 });
 
