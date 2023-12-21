@@ -7,15 +7,11 @@ const httpServer = createServer();
 const io = new Server(httpServer, {
   cors: { origin: "*" },
 });
-let users: User[] = Array<User>();
-
-User.fetchUsers();
 
 io.on("connection", (socket) => {
-  console.log(`a user connected, ID: ${socket.id}`);
-  socket.on("onconnect", (userIDSocket: string) => {
+  socket.on("onconnect", async (userIDSocket: string) => {
     let userID: number = JSON.parse(userIDSocket) as number;
-    User.usersDB.forEach(user => {
+    (await User.fetchUsers()).forEach(user => {
       if (userID == user.id) {
         user.socketID = socket.id;
         user.isActive = true;
@@ -23,17 +19,16 @@ io.on("connection", (socket) => {
       }
     });
   });
-
-
+  socket.on("newChatPartner", (user: User) => {
+    io.emit("newChat", user);
+  });
   socket.on("startChat", (chatID: string) => {
     let newChatStream: ChatStream = new ChatStream();
     newChatStream.startStreamingChat(chatID, io)
   });
-
-  socket.on("disconnect", (error: string) => {
-    users.forEach(userInUsers => {
+  socket.on("disconnect", async (error: string) => {
+    (await User.fetchUsers()).forEach(userInUsers => {
       if (userInUsers.socketID == socket.id) {
-        console.log("USER CONNECTION CLOSED");
         userInUsers.isActive = false;
         User.update_user_active(userInUsers.name, userInUsers.isActive);
       }

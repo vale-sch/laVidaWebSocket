@@ -1,5 +1,4 @@
 export class User {
-    public static usersDB: User[] = [];
 
     public id: number = 0;
     public name: string = "";
@@ -30,30 +29,21 @@ export class User {
                 body: JSON.stringify(requestBody),
             });
             if (response.status === 200) {
-                let responseText = await response.json();
-                console.log(responseText);
+                await response.json();
             } else {
-                let data: any = await response.json();
-                console.log(`Error: ${data.error}`);
+                await response.json();
             }
         } catch (error) {
-            console.error('Error creating user:', error);
         }
     }
 
-    static async fetchUsers(): Promise<void> {
+    static async fetchUsers(): Promise<User[]> {
         try {
             const response = await fetch('https://lavida-server.vercel.app/api/get_users');
             let usersFetched: User[] = await response.json() as User[];
-            let increment: number = 0;
-            usersFetched.forEach((userDB: any) => {
-                User.usersDB[increment] = new User(userDB.id, userDB.name, userDB.password, userDB.isactive);
-                increment++;
-            });
+            return usersFetched;
         } catch (error) {
-            console.error('Error fetching users:', error);
-
+            return null as unknown as User[];
         }
     }
-
 }
