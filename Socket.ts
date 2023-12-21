@@ -24,7 +24,7 @@ io.on("connection", (socket) => {
   });
   socket.on("startChat", (chatID: string) => {
     let newChatStream: ChatStream = new ChatStream();
-    newChatStream.startStreamingChat(chatID, io)
+    newChatStream.startStreamingChat(chatID, socket);
   });
   socket.on("disconnect", async (error: string) => {
     (await User.fetchUsers()).forEach(userInUsers => {
