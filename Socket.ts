@@ -22,6 +22,9 @@ io.on("connection", (socket) => {
   socket.on("newChatPartner", (user: User) => {
     io.emit("newChat", user);
   });
+  socket.on("newChatRequest", (usersInfo: string[]) => {
+    io.emit(`${usersInfo[1]}`, usersInfo[0]);
+  });
   socket.on("startChat", (chatID: string) => {
     let newChatStream: ChatStream = new ChatStream();
     newChatStream.startStreamingChat(chatID, socket);
