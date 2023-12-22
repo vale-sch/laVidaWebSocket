@@ -4,7 +4,6 @@ export class User {
     public name: string = "";
     public password: string = "";
     public isActive: boolean = true;
-    public socketID: string = "";
 
 
     constructor(_id: number, _name: string, _password: string, _isActive: boolean) {
