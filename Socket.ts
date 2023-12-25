@@ -32,7 +32,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("startChat", (chatID: string, userID: number) => {
-    let chatIDInOpenChats = openChatsUsers.find(openChat => openChat.userID == userID)?.ChatStream.chatID;
+    let chatIDInOpenChats = openChatsUsers.find(openChat => openChat.ChatStream.chatID == chatID)?.ChatStream.chatID;
     let userIDInOpenChats = openChatsUsers.find(openChat => openChat.userID == userID)?.userID;
     if (chatIDInOpenChats)
       if (userID == userIDInOpenChats)
