@@ -32,10 +32,16 @@ io.on("connection", (socket) => {
   });
 
   socket.on("startChat", (chatID: string, userID: number) => {
+    //check if chat is already open
+    let openChat: OpenChats = openChatsUsers.find(openChat => openChat.userID == userID && openChat.ChatStream.chatID == chatID) as OpenChats;
+    if (openChat != undefined) return;
+
+
     let newChatStream: ChatStream = new ChatStream(chatID, socket);
     newChatStream.startStreamingChat();
     let newOpenChat: OpenChats = new OpenChats(userID, newChatStream);
     openChatsUsers.push(newOpenChat);
+
   });
 
   socket.on("disconnect", async (error: string) => {
