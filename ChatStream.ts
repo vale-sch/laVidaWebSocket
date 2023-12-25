@@ -31,7 +31,7 @@ export class ChatStream {
                     const newRecord = payload.new;
                     let chatHistory: ChatHistory = [newRecord][0] as unknown as ChatHistory;
                     let newMsg = chatHistory.messages[chatHistory.messages.length - 1];
-                    this.socket.emit(`chat=${this.chatID}`, JSON.stringify(newMsg));
+                    this.socket.emit(this.chatID, JSON.stringify(newMsg));
                 }
             )
             .subscribe()
