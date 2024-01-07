@@ -42,6 +42,7 @@ io.on("connection", (socket) => {
     let newOpenChat: OpenChats = new OpenChats(userID, newChatStream);
     openChatsUsers.push(newOpenChat);
 
+
   });
 
   socket.on("disconnect", async (error: string) => {
