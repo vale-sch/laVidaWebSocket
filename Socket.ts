@@ -30,7 +30,9 @@ io.on("connection", (socket) => {
   socket.on("newChatRequest", (usersInfo: string[]) => {
     io.emit(`${usersInfo[1]}`, usersInfo[0]);
   });
-
+  socket.on("deleteChat", (user: string, chatID: string) => {
+    io.emit(`${user}toDelete`, chatID);
+  });
   socket.on("startChat", (chatID: string, userID: number) => {
     //check if chat is already open
     let openChat: OpenChats = openChatsUsers.find(openChat => openChat.userID == userID && openChat.ChatStream.chatID == chatID) as OpenChats;

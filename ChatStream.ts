@@ -30,6 +30,10 @@ export class ChatStream {
                 (payload) => {
                     const newRecord = payload.new;
                     let chatHistory: ChatHistory = [newRecord][0] as unknown as ChatHistory;
+                    if (chatHistory.messages == undefined) {
+                        this.channel.unsubscribe();
+                        return;
+                    }
                     let newMsg = chatHistory.messages[chatHistory.messages.length - 1];
                     this.socket.emit(this.chatID, JSON.stringify(newMsg));
                 }
